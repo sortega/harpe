@@ -9,7 +9,7 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
-            <project.build.sourceEncoding>utf8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>utf8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -40,4 +40,15 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>repo</id>
+            <url>https://github.com/sortega/maven-repo/raw/master/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>https://github.com/sortega/maven-repo/raw/master/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
