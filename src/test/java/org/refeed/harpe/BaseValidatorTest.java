@@ -2,7 +2,11 @@ package org.refeed.harpe;
 
 import org.junit.Ignore;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.*;
 
 @Ignore
@@ -16,5 +20,18 @@ public class BaseValidatorTest {
         assertFalse("should be invalid", result.isValid());
         Iterable<ValidationError> errors = result.getValidationErrors();
         assertThat(errors, hasItem(new ValidationError(message)));
+    }
+
+    protected void assertHasErrors(ValidationResult result,
+                                   String... expectedMessages) {
+        assertFalse("should be invalid", result.isValid());
+        List<ValidationError> expectedErrors =
+                new LinkedList<ValidationError>();
+        for (String message : expectedMessages) {
+            expectedErrors.add(new ValidationError(message));
+        }
+        Iterable<ValidationError> errors = result.getValidationErrors();
+        assertThat(errors,
+                   hasItems(expectedErrors.toArray(new ValidationError[0])));
     }
 }

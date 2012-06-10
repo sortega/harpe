@@ -22,8 +22,4 @@ public abstract class ValidationUtil {
             }
         };
     }
-
-    public static <T> Validation<T, T> any() {
-        return new RuleCheck<T>() {};
-    }
 }

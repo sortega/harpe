@@ -1,7 +1,5 @@
 package org.refeed.harpe;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,53 +33,35 @@ public abstract class RuleCheck<T> implements Validation<T, T> {
     @Override
     public final ValidationResult<T, T> run(T value) {
         this.errors = new LinkedList<ValidationError>();
-
-        for (Method m: this.getClass().getDeclaredMethods()) {
-            if (m.getName().startsWith("check")) {
-                invokeCheck(value, m);
-            }
-        }
-
+        checkRule(value);
         return this.errors.isEmpty()
                 ? new ValidationSuccess<T, T>(value, value)
                 : new ValidationFailure<T, T>(value, errors);
     }
 
-    private void invokeCheck(T value, Method m) {
-        if (m.getParameterTypes().length != 1) {
-            throwCannotInvoke(m, null);
-        }
-        try {
-            m.setAccessible(true);
-            Object result = m.invoke(this, value);
-            if (result == null) {
-                return;
-            }
-            if (result instanceof ValidationError) {
-                this.errors.add((ValidationError) result);
-            } else if (result instanceof Collection) {
-                this.errors.addAll((Collection<ValidationError>) result);
-            }
-        } catch (IllegalAccessException ex) {
-            throwCannotInvoke(m, ex);
-        } catch (IllegalArgumentException ex) {
-            throwCannotInvoke(m, ex);
-        } catch (InvocationTargetException ex) {
-            throwCannotInvoke(m, ex);
-        }
-    }
-
-    private void throwCannotInvoke(Method m, Throwable ex) {
-        throw new RuntimeException("Don't know how to invoke " + m.getName(),
-                                   ex);
-    }
+    protected abstract void checkRule(T value);
 
     protected void error(String formatString, Object... args) {
         this.errors.add(new ValidationError(formatString, args));
     }
 
+    protected void error(ValidationError error) {
+        this.errors.add(error);
+    }
+
     protected void errors(Collection<ValidationError> errors) {
         this.errors.addAll(errors);
+    }
+
+    private static final RuleCheck NO_CHECK = new RuleCheck() {
+        @Override
+        protected void checkRule(Object ignored) {
+            // Nothing
+        }
+    };
+
+    public static <T> RuleCheck<T> any() {
+        return (RuleCheck<T>) NO_CHECK;
     }
 
     /**
@@ -91,16 +71,15 @@ public abstract class RuleCheck<T> implements Validation<T, T> {
      * @param <T>   Type of values to check
      * @return      The composed rule check
      */
-    public static <T> RuleCheck<T> checkAll(
-            final RuleCheck<T>... rules) {
+    public static <T> RuleCheck<T> checkAll(final RuleCheck<T>... rules) {
         switch(rules.length) {
             case 0:
-                return new RuleCheck<T>() {};
+                return (RuleCheck<T>) NO_CHECK;
             case 1:
                 return rules[0];
             default:
                 return new RuleCheck<T>() {
-                    public void checkSubRules(T value) {
+                    public void checkRule(T value) {
                         for (Validation<T, T> validation : rules) {
                             errors(validation.run(value)
                                     .getValidationErrors());

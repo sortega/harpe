@@ -22,20 +22,12 @@ public abstract class IntegerValidation {
             this.to = to;
         }
 
-        public void checkLowerBound(int value) {
-            if (this.from == null) {
-                return;
-            }
-            if (this.from > value) {
+        public void checkRule(Integer value) {
+            if (this.from != null && this.from > value) {
                 error("must be at least %d", this.from);
             }
-        }
 
-        public void checkUpperBound(int value) {
-            if (this.to == null) {
-                return;
-            }
-            if (this.to < value) {
+            if (this.to != null && this.to < value) {
                 error("must be at most %d", this.to);
             }
         }
