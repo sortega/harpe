@@ -1,7 +1,5 @@
 package org.refeed.harpe;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import static org.refeed.harpe.ValidationUtil.compose;
@@ -127,24 +125,19 @@ public abstract class StringValidation {
         return compose(nestedConversion, floating());
     }
 
-    public static<T> Conversion<String, T> length(
-            final Validation<Integer, T> lengthValidation) {
+    public static RuleCheck<String> length(
+            final RuleCheck<Integer> lengthValidation) {
 
         /* TODO: extract this pattern as PropertyCheck, a validation on a
            property of a raw object */
-        return new Conversion<String, T>() {
+        return new RuleCheck<String>() {
             @Override
-            public ValidationResult<String, T> run(String value) {
-                ValidationResult<Integer, T> innerResult =
+            protected void checkRule(String value) {
+                ValidationResult<Integer, Integer> innerResult =
                         lengthValidation.run(value.length());
-                if (innerResult.isValid()) {
-                    return success(value, innerResult.getCleanValue());
-                }
-                List<ValidationError> errors = new ArrayList<ValidationError>();
                 for (ValidationError innerError: innerResult.getValidationErrors()) {
-                    errors.add(new ValidationError("length %s", innerError));
+                    error("length %s", innerError);
                 }
-                return conversionErrors(value, errors);
             }
         };
     }

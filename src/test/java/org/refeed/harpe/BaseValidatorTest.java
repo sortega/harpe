@@ -7,22 +7,29 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 @Ignore
 public class BaseValidatorTest {
-    protected void assertValid(ValidationResult result) {
+    protected static void assertValid(ValidationResult result) {
         assertTrue("should be valid", result.isValid());
         assertTrue("should be empty", result.getValidationErrors().isEmpty());
     }
 
-    protected void assertHasError(ValidationResult result, String message) {
+    protected static<From, To> void assertHasCleanValue(
+            ValidationResult<From, To> result, To value) {
+        assertValid(result);
+        assertThat(result.getCleanValue(), is(value));
+    }
+
+    protected static void assertHasError(ValidationResult result, String message) {
         assertFalse("should be invalid", result.isValid());
         Iterable<ValidationError> errors = result.getValidationErrors();
         assertThat(errors, hasItem(new ValidationError(message)));
     }
 
-    protected void assertHasErrors(ValidationResult result,
+    protected static void assertHasErrors(ValidationResult result,
                                    String... expectedMessages) {
         assertFalse("should be invalid", result.isValid());
         List<ValidationError> expectedErrors =

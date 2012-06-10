@@ -24,7 +24,7 @@ public class StringValidationTest extends BaseValidatorTest {
 
     @Test
     public void testLength() {
-        Validation<String, Integer> instance = length(atMost(15));
+        RuleCheck<String> instance = length(atMost(15));
         assertValid(instance.run("not so long"));
         assertHasError(instance.run("very, very, long"),
                        "length must be at most 15");
