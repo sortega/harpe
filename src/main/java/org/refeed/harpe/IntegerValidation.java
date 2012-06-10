@@ -1,19 +1,19 @@
 package org.refeed.harpe;
 
 public abstract class IntegerValidation {
-    public static Validator<Integer> between(int from, int to) {
+    public static RuleCheck<Integer> between(int from, int to) {
         return new IntegerRange(from, to);
     }
 
-    public static Validator<Integer> atLeast(int from) {
+    public static RuleCheck<Integer> atLeast(int from) {
         return new IntegerRange(from, null);
     }
 
-    public static Validator<Integer> atMost(int to) {
+    public static RuleCheck<Integer> atMost(int to) {
         return new IntegerRange(null, to);
     }
 
-    private static class IntegerRange extends ValidatorSupport<Integer> {
+    private static class IntegerRange extends RuleCheck<Integer> {
         private final Integer from;
         private final Integer to;
 
