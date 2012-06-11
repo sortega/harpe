@@ -25,9 +25,9 @@ public abstract class FloatingValidation {
         return compose(nestedConversion, floating());
     }
 
-    public static RuleCheck<Double> about(final double requiredValue,
+    public static Check<Double> about(final double requiredValue,
                                           final double tolerance) {
-        return new RuleCheck<Double>() {
+        return new Check<Double>() {
             @Override
             public void checkRule(Double value) {
                 if (Math.abs(requiredValue - value) > tolerance) {
@@ -38,10 +38,10 @@ public abstract class FloatingValidation {
         };
     }
 
-    public static RuleCheck<Double> between(final double from,
+    public static Check<Double> between(final double from,
                                             final double to,
                                             final double tolerance) {
-        return new RuleCheck<Double>() {
+        return new Check<Double>() {
             @Override
             public void checkRule(Double value) {
                 if (from - tolerance > value) {

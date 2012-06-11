@@ -25,19 +25,19 @@ public abstract class IntegerValidation {
         return compose(nestedConversion, integer());
     }
 
-    public static RuleCheck<Integer> between(int from, int to) {
+    public static Check<Integer> between(int from, int to) {
         return new IntegerRange(from, to);
     }
 
-    public static RuleCheck<Integer> atLeast(int from) {
+    public static Check<Integer> atLeast(int from) {
         return new IntegerRange(from, null);
     }
 
-    public static RuleCheck<Integer> atMost(int to) {
+    public static Check<Integer> atMost(int to) {
         return new IntegerRange(null, to);
     }
 
-    private static class IntegerRange extends RuleCheck<Integer> {
+    private static class IntegerRange extends Check<Integer> {
         private final Integer from;
         private final Integer to;
 

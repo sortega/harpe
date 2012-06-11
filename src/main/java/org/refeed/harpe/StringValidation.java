@@ -41,7 +41,7 @@ public abstract class StringValidation {
      * @see #trimmed()
      */
     public static Validation<String, String> nonEmpty() {
-        return new RuleCheck<String>() {
+        return new Check<String>() {
             public void checkRule(String value) {
                 if (value.isEmpty()) {
                     error("cannot be empty");
@@ -57,9 +57,9 @@ public abstract class StringValidation {
      * @param errorDescription  Custom error
      * @return                  Validation
      */
-    public static RuleCheck<String> matches(final Pattern regex,
+    public static Check<String> matches(final Pattern regex,
                                             final String errorDescription) {
-        return new RuleCheck<String>() {
+        return new Check<String>() {
             public void checkRule(String value) {
                 if(!regex.matcher(value).matches()) {
                     error(errorDescription);
@@ -75,24 +75,17 @@ public abstract class StringValidation {
      * @param errorDescription   Custom error
      * @return                   Validation
      */
-    public static RuleCheck<String> matches(final String regex,
+    public static Check<String> matches(final String regex,
                                             final String errorDescription) {
         return matches(Pattern.compile(regex), errorDescription);
     }
 
-    public static RuleCheck<String> length(
-            final RuleCheck<Integer> lengthValidation) {
-
-        /* TODO: extract this pattern as PropertyCheck, a validation on a
-           property of a raw object */
-        return new RuleCheck<String>() {
+    public static Check<String> length(
+            final Check<Integer> lengthValidation) {
+        return new PropertyCheck<String, Integer>("length", lengthValidation) {
             @Override
-            protected void checkRule(String value) {
-                ValidationResult<Integer, Integer> innerResult =
-                        lengthValidation.run(value.length());
-                for (ValidationError innerError: innerResult.getValidationErrors()) {
-                    error("length %s", innerError);
-                }
+            protected Integer getProperty(String value) {
+                return value.length();
             }
         };
     }

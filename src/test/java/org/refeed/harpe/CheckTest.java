@@ -4,12 +4,12 @@ import org.junit.Test;
 
 import static java.util.Arrays.asList;
 
-public class RuleCheckTest extends BaseValidatorTest {
-    public RuleCheck instance;
+public class CheckTest extends BaseValidatorTest {
+    public Check instance;
 
     @Test
     public void testCheckErrorCall() throws Exception {
-        this.instance = new RuleCheck() {
+        this.instance = new Check() {
             @Override
             protected void checkRule(Object value) {
                 error("invalid " + value);
@@ -21,7 +21,7 @@ public class RuleCheckTest extends BaseValidatorTest {
 
     @Test
     public void testCheckErrorCalls() throws Exception {
-        this.instance = new RuleCheck() {
+        this.instance = new Check() {
             @Override
             protected void checkRule(Object value) {
                 errors(asList(new ValidationError("wrong %s", value),
@@ -34,14 +34,18 @@ public class RuleCheckTest extends BaseValidatorTest {
 
     @Test
     public void testCheckAllComposition() throws Exception {
-        Validation<String, String> composedCheck = RuleCheck.checkAll(
-                new RuleCheck<String>() {
+        Validation<String, String> composedCheck = Check.checkAll(
+                new Check<String>() {
                     @Override
-                    public void checkRule(String value) { error("A" + value); }
+                    public void checkRule(String value) {
+                        error("A" + value);
+                    }
                 },
-                new RuleCheck<String>() {
+                new Check<String>() {
                     @Override
-                    public void checkRule(String value) { error("B" + value); }
+                    public void checkRule(String value) {
+                        error("B" + value);
+                    }
                 }
         );
         assertHasErrors(composedCheck.run("-value"), "A-value", "B-value");
@@ -49,10 +53,12 @@ public class RuleCheckTest extends BaseValidatorTest {
 
     @Test
     public void testCheckAllOfOneComposition() throws Exception {
-        Validation<String, String> composedCheck = RuleCheck.checkAll(
-                new RuleCheck<String>() {
+        Validation<String, String> composedCheck = Check.checkAll(
+                new Check<String>() {
                     @Override
-                    public void checkRule(String value) { error("A" + value); }
+                    public void checkRule(String value) {
+                        error("A" + value);
+                    }
                 }
         );
         assertHasError(composedCheck.run("-value"), "A-value");
@@ -60,13 +66,13 @@ public class RuleCheckTest extends BaseValidatorTest {
 
     @Test
     public void testCheckAllOfNoneComposition() throws Exception {
-        Validation<String, String> composedCheck = RuleCheck.checkAll();
+        Validation<String, String> composedCheck = Check.checkAll();
         assertValid(composedCheck.run("anything"));
     }
 
     @Test
     public void testCheckAny() throws Exception {
-        this.instance = RuleCheck.any();
+        this.instance = Check.any();
         assertValid(this.instance.run("hello"));
         assertValid(this.instance.run(10));
         assertValid(this.instance.run(null));

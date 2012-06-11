@@ -16,7 +16,7 @@ public class IntegerValidationTest extends BaseValidatorTest {
 
     @Test
     public void testBetween() {
-        RuleCheck<Integer> instance = between(0, 10);
+        Check<Integer> instance = between(0, 10);
         assertValid(instance.run(0));
         assertValid(instance.run(5));
         assertValid(instance.run(10));
@@ -26,14 +26,14 @@ public class IntegerValidationTest extends BaseValidatorTest {
 
     @Test
     public void testAtLeast() {
-        RuleCheck<Integer> instance = atLeast(0);
+        Check<Integer> instance = atLeast(0);
         assertValid(instance.run(0));
         assertHasError(instance.run(-1), "must be at least 0");
     }
 
     @Test
     public void testAtMost() {
-        RuleCheck<Integer> instance = atMost(10);
+        Check<Integer> instance = atMost(10);
         assertHasError(instance.run(11), "must be at most 10");
     }
 }

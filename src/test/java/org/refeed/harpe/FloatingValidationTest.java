@@ -18,7 +18,7 @@ public class FloatingValidationTest extends BaseValidatorTest {
 
     @Test
     public void testBetween() {
-        RuleCheck<Double> instance = between(0, 10, TOLERANCE);
+        Check<Double> instance = between(0, 10, TOLERANCE);
         assertValid(instance.run(0d));
         assertValid(instance.run(5d));
         assertValid(instance.run(10d));
@@ -30,7 +30,7 @@ public class FloatingValidationTest extends BaseValidatorTest {
 
     @Test
     public void testAbout() {
-        RuleCheck<Double> instance = about(5, TOLERANCE);
+        Check<Double> instance = about(5, TOLERANCE);
         assertValid(instance.run(5d));
         assertValid(instance.run(5.0001d));
         assertValid(instance.run(4.9999d));
