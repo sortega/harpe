@@ -80,7 +80,7 @@ public abstract class StringValidation {
         return matches(Pattern.compile(regex), errorDescription);
     }
 
-    public static Check<String> length(
+    public static Check<String> withLength(
             final Check<Integer> lengthValidation) {
         return new PropertyCheck<String, Integer>("length", lengthValidation) {
             @Override
@@ -89,5 +89,4 @@ public abstract class StringValidation {
             }
         };
     }
-
 }
