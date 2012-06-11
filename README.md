@@ -21,15 +21,23 @@ characters:
     import static org.refeed.harpe.IntegerValidation.*;
     import static org.refeed.harpe.StringValidation.*;
 
-    Validation<String, String> validation = trimmed(length(between(5, 15)));
-    validation.run(" hi!  ")
-    // you get "length must be at least 5"
-    validation.run("very, very  long string")
-    // you get "length must be at most 15"
-    validation.run("valid value  ").isValid()
-    // true
-    validation.run("valid value  ").getCleanValue()
-    // "valid value"
+    Validation<String, String> validation = trimmed(withLength(between(5, 15)));
+
+Apart from the import statements and variable declaration, validator
+definition is extremely compact, just `trimmed(withLength(between(5, 15)))`.
+Once defined, validators can be easily used by calling `run`:
+
+    validation.run(" hi!  ");
+    validation.run("very, very  long string");
+
+And you will get `ValidationError` as return value with message 
+`"length must be at least 5"` for the former and `"length must be at most 15"`
+for the latter.
+
+    validation.run("valid value  ").isValid();
+    validation.run("valid value  ").getCleanValue();
+
+When feeding it with valid values we get `"valid value"` which is nicely trimmed.
 
 
 Examples of use
@@ -39,6 +47,11 @@ TO DO. See `test/java/org/refeed/harpe` meanwhile.
 
 Download and install
 --------------------
+
+TO DO
+
+Extend Harpe
+------------
 
 TO DO
 
