@@ -1,17 +1,22 @@
 package org.refeed.harpe;
 
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 @Ignore
 public class BaseValidatorTest {
+    @BeforeClass
+    public static void setUpClass() {
+        Locale.setDefault(Locale.ENGLISH);
+    }
+
     protected static void assertValid(ValidationResult result) {
         assertTrue("should be valid", result.isValid());
         assertTrue("should be empty", result.getValidationErrors().isEmpty());

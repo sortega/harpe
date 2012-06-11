@@ -1,6 +1,5 @@
 package org.refeed.harpe;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -11,15 +10,11 @@ import static org.refeed.harpe.DateValidation.date;
 
 public class DateValidationTest extends BaseValidatorTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
     public void shouldParseDate() throws Exception {
         Validation<String, Date> instance = date();
         ValidationResult<String, Date> validResult =
-                instance.run("11/06/12 18:25");
+                instance.run("6/11/12 6:25 PM");
         assertValid(validResult);
         assertEquals(new Date(1339431900000l), validResult.getCleanValue());
     }
@@ -50,7 +45,7 @@ public class DateValidationTest extends BaseValidatorTest {
             }
         });
 
-        Date result = instance.run("11/06/12 18:25").getCleanValue();
-        assertEquals("12/06/12 18:25", new SimpleDateFormat().format(result));
+        Date result = instance.run("6/11/12 6:25 PM").getCleanValue();
+        assertEquals("6/12/12 6:25 PM", new SimpleDateFormat().format(result));
     }
 }

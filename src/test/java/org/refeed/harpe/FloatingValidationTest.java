@@ -1,19 +1,11 @@
 package org.refeed.harpe;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Locale;
 
 import static org.refeed.harpe.FloatingValidation.*;
 
 public class FloatingValidationTest extends BaseValidatorTest {
     private final static double TOLERANCE = 0.001;
-
-    @Before
-    public void setUp() {
-        Locale.setDefault(Locale.ENGLISH);
-    }
 
     @Test
     public void testParseDouble() {
