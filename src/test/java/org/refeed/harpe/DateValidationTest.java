@@ -16,7 +16,6 @@ public class DateValidationTest extends BaseValidatorTest {
         ValidationResult<String, Date> validResult =
                 instance.run("6/11/12 6:25 PM");
         assertValid(validResult);
-        assertEquals(new Date(1339431900000l), validResult.getCleanValue());
     }
 
     @Test
