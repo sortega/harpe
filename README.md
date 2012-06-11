@@ -1,6 +1,8 @@
 Harpe: a pluggable Java validation library
 ==========================================
 
+[![Build Status](https://secure.travis-ci.org/sortega/harpe.png)](http://travis-ci.org/sortega/harpe)
+
 Perseus decapitated Medusa with the mythical sword Harpe.  The same spirit of
 cutting down the recurrent and tedious problems of input validation is present
 in Harpe.
