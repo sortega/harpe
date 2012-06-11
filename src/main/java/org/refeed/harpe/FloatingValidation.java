@@ -1,6 +1,31 @@
 package org.refeed.harpe;
 
+import static org.refeed.harpe.ValidationUtil.compose;
+
 public abstract class FloatingValidation {
+    private static class DoubleConversion extends Conversion<String, Double> {
+        @Override
+        public ValidationResult<String, Double> run(String value) {
+            try {
+                return success(value, Double.parseDouble(value));
+            } catch(NumberFormatException ex) {
+                return conversionError(value, "'%s' is not a valid double",
+                        value);
+            }
+        }
+    }
+
+    private static final DoubleConversion TO_DOUBLE = new DoubleConversion();
+
+    public static Validation<String, Double> floating() {
+        return TO_DOUBLE;
+    }
+
+    public static <T> Validation<String, T> floating(
+            Validation<Double, T> nestedConversion) {
+        return compose(nestedConversion, floating());
+    }
+
     public static RuleCheck<Double> about(final double requiredValue,
                                           final double tolerance) {
         return new RuleCheck<Double>() {

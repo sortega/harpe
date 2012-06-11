@@ -8,6 +8,16 @@ public class FloatingValidationTest extends BaseValidatorTest {
     private final static double TOLERANCE = 0.001;
 
     @Test
+    public void testParseDouble() {
+        Validation<String, Double> instance = floating(about(1, 0.001));
+        assertValid(instance.run(" 0.9999"));
+        assertHasError(instance.run("one"),
+                "'one' is not a valid double");
+        assertHasError(instance.run("3.001e10"),
+                "must be about 1,000000 (margin of 0,001000)");
+    }
+
+    @Test
     public void testBetween() {
         RuleCheck<Double> instance = between(0, 10, TOLERANCE);
         assertValid(instance.run(0d));

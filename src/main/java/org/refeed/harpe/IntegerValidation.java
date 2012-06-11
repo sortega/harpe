@@ -1,6 +1,31 @@
 package org.refeed.harpe;
 
+import static org.refeed.harpe.ValidationUtil.compose;
+
 public abstract class IntegerValidation {
+    private static class IntegerConversion extends Conversion<String, Integer> {
+        @Override
+        public ValidationResult<String, Integer> run(String value) {
+            try {
+                return success(value, Integer.parseInt(value));
+            } catch(NumberFormatException ex) {
+                return conversionError(value, "'%s' is not a valid integer",
+                        value);
+            }
+        }
+    }
+
+    private static final IntegerConversion TO_INTEGER = new IntegerConversion();
+
+    public static Validation<String, Integer> integer() {
+        return TO_INTEGER;
+    }
+
+    public static <T> Validation<String, T> integer(
+            Validation<Integer, T> nestedConversion) {
+        return compose(nestedConversion, integer());
+    }
+
     public static RuleCheck<Integer> between(int from, int to) {
         return new IntegerRange(from, to);
     }

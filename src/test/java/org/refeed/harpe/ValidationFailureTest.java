@@ -11,7 +11,7 @@ public class ValidationFailureTest {
 
     @Before
     public void setUp() throws Exception {
-        this.instance = new ValidationFailure<String, Integer>("ñ12",
+        this.instance = new ValidationFailure<String, Integer>("n12",
                 new ValidationError("Invalid integer"));
     }
 
@@ -22,7 +22,7 @@ public class ValidationFailureTest {
 
     @Test
     public void shouldReturnOriginalValue() throws Exception {
-        assertEquals("ñ12", this.instance.getOriginalValue());
+        assertEquals("n12", this.instance.getOriginalValue());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -34,5 +34,11 @@ public class ValidationFailureTest {
     public void shouldReturnErrors() throws Exception {
         assertThat(this.instance.getValidationErrors(),
                    hasItems(new ValidationError("Invalid integer")));
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("invalid <n12>: Invalid integer",
+                     this.instance.toString());
     }
 }

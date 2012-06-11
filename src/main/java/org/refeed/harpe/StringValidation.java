@@ -80,51 +80,6 @@ public abstract class StringValidation {
         return matches(Pattern.compile(regex), errorDescription);
     }
 
-    private static class IntegerConversion extends Conversion<String, Integer> {
-        @Override
-        public ValidationResult<String, Integer> run(String value) {
-            try {
-                return success(value, Integer.parseInt(value));
-            } catch(NumberFormatException ex) {
-                return conversionError(value, "'%s' is not a valid integer",
-                                       value);
-            }
-        }
-    }
-    private static final IntegerConversion TO_INTEGER = new IntegerConversion();
-
-    public static Validation<String, Integer> integer() {
-        return TO_INTEGER;
-    }
-
-    public static <T> Validation<String, T> integer(
-            Validation<Integer, T> nestedConversion) {
-        return compose(nestedConversion, integer());
-    }
-
-    private static class DoubleConversion extends Conversion<String, Double> {
-        @Override
-        public ValidationResult<String, Double> run(String value) {
-            try {
-                return success(value, Double.parseDouble(value));
-            } catch(NumberFormatException ex) {
-                return conversionError(value, "'%s' is not a valid double",
-                                       value);
-            }
-        }
-    }
-
-    private static final DoubleConversion TO_DOUBLE = new DoubleConversion();
-
-    public static Validation<String, Double> floating() {
-        return TO_DOUBLE;
-    }
-
-    public static <T> Validation<String, T> floating(
-            Validation<Double, T> nestedConversion) {
-        return compose(nestedConversion, floating());
-    }
-
     public static RuleCheck<String> length(
             final RuleCheck<Integer> lengthValidation) {
 

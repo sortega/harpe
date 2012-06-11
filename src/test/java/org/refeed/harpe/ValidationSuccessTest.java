@@ -29,4 +29,9 @@ public class ValidationSuccessTest {
     public void shouldHaveNoErrors() throws Exception {
         assertTrue(this.instance.getValidationErrors().isEmpty());
     }
+
+    @Test
+    public void testToString() {
+        assertEquals("valid <12>", this.instance.toString());
+    }
 }
