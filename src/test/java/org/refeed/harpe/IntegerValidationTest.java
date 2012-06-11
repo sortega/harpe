@@ -10,8 +10,7 @@ public class IntegerValidationTest extends BaseValidatorTest {
     public void testParseInteger() {
         Validation<String, Integer> instance = integer(atLeast(0));
         assertValid(instance.run("121"));
-        assertHasError(instance.run("one hundred"),
-                "'one hundred' is not a valid integer");
+        assertHasError(instance.run("one hundred"), "is not a valid integer");
         assertHasError(instance.run("-3"), "must be at least 0");
     }
 

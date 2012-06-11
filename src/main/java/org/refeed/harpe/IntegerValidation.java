@@ -5,12 +5,11 @@ import static org.refeed.harpe.ValidationUtil.compose;
 public abstract class IntegerValidation {
     private static class IntegerConversion extends Conversion<String, Integer> {
         @Override
-        public ValidationResult<String, Integer> run(String value) {
+        public ValidationResult<String, Integer> convert(String value) {
             try {
-                return success(value, Integer.parseInt(value));
+                return success(Integer.parseInt(value));
             } catch(NumberFormatException ex) {
-                return conversionError(value, "'%s' is not a valid integer",
-                        value);
+                return conversionError("is not a valid integer");
             }
         }
     }

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static org.refeed.harpe.ValidationUtil.compose;
 
-public class DateValidation {
+public abstract class DateValidation {
     private static final SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat();
 
     private static class DateConversion extends Conversion<String, Date> {
@@ -18,11 +18,11 @@ public class DateValidation {
         }
 
         @Override
-        public ValidationResult<String, Date> run(String value) {
+        public ValidationResult<String, Date> convert(String value) {
             try {
-                return success(value, this.format.parse(value));
+                return success(this.format.parse(value));
             } catch (ParseException e) {
-                return conversionError(value, "not a valid date");
+                return conversionError("is not a valid date");
             }
         }
     }

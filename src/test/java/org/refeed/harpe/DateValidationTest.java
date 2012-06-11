@@ -28,7 +28,7 @@ public class DateValidationTest extends BaseValidatorTest {
     public void shouldNotParseOtherText() throws Exception {
         Validation<String, Date> instance = date();
         assertHasError(instance.run("2012 is a great year"),
-                "not a valid date");
+                       "is not a valid date");
     }
 
     @Test
@@ -45,9 +45,8 @@ public class DateValidationTest extends BaseValidatorTest {
     public void shouldChainOtherValidations() throws Exception {
         Validation<String, Date> instance = date(new Conversion<Date, Date>() {
             @Override
-            public ValidationResult<Date, Date> run(Date value) {
-                return success(value, new Date(value.getTime() +
-                                               24 * 3600 * 1000));
+            protected ValidationResult<Date, Date> convert(Date value) {
+                return success(new Date(value.getTime() + 24 * 3600 * 1000));
             }
         });
 

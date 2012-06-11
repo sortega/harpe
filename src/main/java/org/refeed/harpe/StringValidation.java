@@ -8,8 +8,8 @@ public abstract class StringValidation {
 
     private static class TrimConversion extends Conversion<String, String> {
         @Override
-        public ValidationResult<String, String> run(String value) {
-            return success(value, value.trim());
+        public ValidationResult<String, String> convert(String value) {
+            return success(value.trim());
         }
     }
     private static final TrimConversion TRIM = new TrimConversion();

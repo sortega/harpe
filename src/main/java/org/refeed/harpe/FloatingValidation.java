@@ -5,12 +5,11 @@ import static org.refeed.harpe.ValidationUtil.compose;
 public abstract class FloatingValidation {
     private static class DoubleConversion extends Conversion<String, Double> {
         @Override
-        public ValidationResult<String, Double> run(String value) {
+        public ValidationResult<String, Double> convert(String value) {
             try {
-                return success(value, Double.parseDouble(value));
+                return success(Double.parseDouble(value));
             } catch(NumberFormatException ex) {
-                return conversionError(value, "'%s' is not a valid double",
-                        value);
+                return conversionError("is not a valid double");
             }
         }
     }
