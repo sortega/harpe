@@ -1,6 +1,8 @@
 package org.refeed.harpe;
 
 public class ValidationError {
+    private static final int HASH_SEED = 3;
+    private static final int HASH_FACTOR = 97;
     private final String message;
 
     public ValidationError(String formatString, Object... args) {
@@ -18,24 +20,17 @@ public class ValidationError {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final ValidationError other = (ValidationError) obj;
-        if ((this.message == null) ? (other.message != null)
-                : !this.message.equals(other.message)) {
-            return false;
-        }
-        return true;
+        return this.message.equals(other.message);
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + (this.message != null ? this.message.hashCode() : 0);
+        int hash = HASH_SEED;
+        hash = HASH_FACTOR * hash + this.message.hashCode();
         return hash;
     }
 
