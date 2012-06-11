@@ -12,7 +12,7 @@ is represented with the generic interface `Validation<From,To>` (see
 javadocs).
 
 For example, one can be interested on validating a `String` value that,
-ignoring whitespaces at the beginning and the end should have between 5 and 25
+ignoring whitespaces at the beginning and the end should have between 5 and 15
 characters:
 
     import org.refeed.harpe.Validation;
@@ -26,6 +26,8 @@ characters:
     // you get "length must be at most 15"
     validation.run("valid value  ").isValid()
     // true
+    validation.run("valid value  ").getCleanValue()
+    // "valid value"
 
 
 Examples of use
