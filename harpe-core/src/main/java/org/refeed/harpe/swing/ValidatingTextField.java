@@ -1,7 +1,7 @@
 package org.refeed.harpe.swing;
 
-import org.refeed.harpe.Validation;
 import org.refeed.harpe.ValidationResult;
+import org.refeed.harpe.Validation;
 
 import javax.swing.*;
 import java.awt.*;

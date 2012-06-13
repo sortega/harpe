@@ -1,7 +1,5 @@
 package org.refeed.harpe;
 
-import static org.refeed.harpe.ValidationUtil.compose;
-
 public abstract class IntegerValidation {
     private static class IntegerConversion extends Conversion<String, Integer> {
         @Override
@@ -22,7 +20,7 @@ public abstract class IntegerValidation {
 
     public static <T> Validation<String, T> integer(
             Validation<Integer, T> nestedConversion) {
-        return compose(nestedConversion, integer());
+        return ValidationUtil.compose(nestedConversion, integer());
     }
 
     public static Check<Integer> between(int from, int to) {

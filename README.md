@@ -30,7 +30,7 @@ Once defined, validators can be easily used by calling `run`:
     validation.run(" hi!  ");
     validation.run("very, very  long string");
 
-And you will get `ValidationError` as return value with message 
+And you will get `ValidationError` as return value with message
 `"length must be at least 5"` for the former and `"length must be at most 15"`
 for the latter.
 

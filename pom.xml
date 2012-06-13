@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.refeed.harpe</groupId>
-    <artifactId>harpe</artifactId>
+    <artifactId>harpe-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>Harpe</name>
     <version>0.1-SNAPSHOT</version>
+
+    <modules>
+        <module>harpe-core</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>utf8</project.build.sourceEncoding>
@@ -57,7 +64,8 @@
                                 <argLine>-Xmx256m</argLine>
                                 <argLine>-XX:MaxPermSize=256m</argLine>
                             </configuration>
-                            <!-- Usually findbugs needs a lot of memory, change these values if needed. -->
+                            <!-- Usually findbugs needs a lot of memory,
+                                 change these values if needed. -->
                         </plugin>
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
@@ -82,7 +90,8 @@
                                 <linkXref>true</linkXref>
                                 <minimumTokens>100</minimumTokens>
                                 <minimumPriority>3</minimumPriority>
-                                <!-- Change minimum priority to see more or less messages -->
+                                <!-- Change minimum priority to see more or
+                                     less messages -->
                                 <targetJdk>1.6</targetJdk>
                             </configuration>
                         </plugin>
@@ -93,12 +102,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>

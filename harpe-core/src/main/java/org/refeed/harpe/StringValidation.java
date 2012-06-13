@@ -2,8 +2,6 @@ package org.refeed.harpe;
 
 import java.util.regex.Pattern;
 
-import static org.refeed.harpe.ValidationUtil.compose;
-
 public abstract class StringValidation {
 
     private static class TrimConversion extends Conversion<String, String> {
@@ -32,7 +30,7 @@ public abstract class StringValidation {
      */
     public static <T> Validation<String, T> trimmed(
             Validation<String, T> nestedValidation) {
-        return compose(nestedValidation, trimmed());
+        return ValidationUtil.compose(nestedValidation, trimmed());
     }
 
     /**

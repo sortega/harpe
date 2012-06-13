@@ -1,7 +1,5 @@
 package org.refeed.harpe;
 
-import static org.refeed.harpe.ValidationUtil.compose;
-
 public abstract class FloatingValidation {
     private static class DoubleConversion extends Conversion<String, Double> {
         @Override
@@ -22,7 +20,7 @@ public abstract class FloatingValidation {
 
     public static <T> Validation<String, T> floating(
             Validation<Double, T> nestedConversion) {
-        return compose(nestedConversion, floating());
+        return ValidationUtil.compose(nestedConversion, floating());
     }
 
     public static Check<Double> about(final double requiredValue,
