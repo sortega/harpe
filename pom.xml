@@ -13,6 +13,7 @@
 
     <modules>
         <module>harpe-core</module>
+        <module>harpe-jcommander</module>
     </modules>
 
     <properties>
