@@ -16,7 +16,6 @@ import org.refeed.harpe.ValidationResult;
  *
  * <pre>
  *     public static class VerbosityValidator extends HarpeValidator {
- *         @Override
  *         protected Validation<String, Integer> getValidation() {
  *             return integer(between(1, 4));
  *         }
@@ -40,7 +39,7 @@ public abstract class HarpeValidator implements IParameterValidator {
      * @throws ParameterException Reporting the first validation error if any
      */
     @Override
-    public void validate(String name, String value) throws ParameterException {
+    public void validate(String name, String value) {
         Validation<String, ?> validation = getValidation();
         ValidationResult<String, ?> result = validation.run(value);
         for (ValidationError error : result.getValidationErrors()) {
