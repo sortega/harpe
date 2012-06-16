@@ -16,14 +16,8 @@ public abstract class Check<T> implements Validation<T, T> {
     private List<ValidationError> errors;
 
     /**
-     * Looks for methods whose name starts with the prefix "check" and collects
-     * all the validation errors they report or reports success otherwise.
-     *
-     * Validation errors are reported either:
-     * <ul>
-     *     <li>Returning a ValidationError or a collection of them</li>
-     *     <li>Invoking protected methods #error or #errors</li>
-     * </ul>
+     * Calls #checkRule and collects all the validation errors it reports or
+     * report success otherwise.
      *
      * @param value Value to check
      * @return      Validation result
@@ -40,6 +34,14 @@ public abstract class Check<T> implements Validation<T, T> {
                 : new ValidationFailure<T, T>(value, errors);
     }
 
+    /**
+     * Checks for validation errors on the input value.
+     *
+     * Validation errors are reported invoking protected methods #error or
+     * #errors.
+     *
+     * @param value Input value
+     */
     protected abstract void checkRule(T value);
 
     protected void error(String formatString, Object... args) {
