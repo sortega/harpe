@@ -17,25 +17,31 @@ For example, one can be interested on validating a `String` value that,
 ignoring whitespaces at the beginning and the end should have between 5 and 15
 characters:
 
+```java
     import org.refeed.harpe.Validation;
     import static org.refeed.harpe.IntegerValidation.*;
     import static org.refeed.harpe.StringValidation.*;
 
     Validation<String, String> validation = trimmed(withLength(between(5, 15)));
+```
 
 Apart from the import statements and variable declaration, validator
 definition is extremely compact, just `trimmed(withLength(between(5, 15)))`.
 Once defined, validators can be easily used by calling `run`:
 
+```java
     validation.run(" hi!  ");
     validation.run("very, very  long string");
+```
 
 And you will get `ValidationError` as return value with message
 `"length must be at least 5"` for the former and `"length must be at most 15"`
 for the latter.
 
+```java
     validation.run("valid value  ").isValid();
     validation.run("valid value  ").getCleanValue();
+```
 
 When feeding it with valid values we get `"valid value"` which is nicely trimmed.
 
