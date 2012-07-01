@@ -1,7 +1,7 @@
 Harpe: a pluggable Java validation library
 ==========================================
 
-![Harpe logo](logo.png)
+![Harpe logo](raw/master/logo.png)
 
 [![Build Status](https://secure.travis-ci.org/sortega/harpe.png)](http://travis-ci.org/sortega/harpe)
 
